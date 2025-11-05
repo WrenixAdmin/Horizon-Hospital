@@ -59,6 +59,16 @@ const Header = () => {
               Contact Us
             </Link>
           </li>
+          <li>
+            <Link
+              to="/careers"
+              className={`font-medium transition-colors hover:text-primary ${
+                isActive("/careers") ? "text-primary" : "text-foreground"
+              }`}
+            >
+              Careers
+            </Link>
+          </li>
         </ul>
 
         {/* Mobile Hamburger */}
@@ -117,6 +127,17 @@ const Header = () => {
                 onClick={() => setMenuOpen(false)}
               >
                 Contact Us
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/careers"
+                className={`font-medium transition-colors hover:text-primary ${
+                  isActive("/careers") ? "text-primary" : "text-foreground"
+                }`}
+                onClick={() => setMenuOpen(false)}
+              >
+                Careers
               </Link>
             </li>
           </ul>
