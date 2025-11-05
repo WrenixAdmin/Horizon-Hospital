@@ -10,6 +10,7 @@ import SEO from "@/components/SEO";
 import opdD from "../../public/img/opdD.webp";
 import emergency from "../../public/img/emergency.webp"
 import pharmacy from "../../public/img/pharammcy.webp";
+import consultant from "../../public/img/special.webp";
 
 
 
@@ -49,7 +50,7 @@ const Home = () => {
       icon: Heart,
       title: "Expert Specialist Consultations",
       description: "Access leading medical specialists in various fields, offering expert diagnosis and personalized treatment plans.",
-      image: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=400&h=300&fit=crop",
+      image: consultant,
     },
     {
       icon: AlertCircle,
