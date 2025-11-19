@@ -11,8 +11,60 @@ import SEO from "@/components/SEO";
 import { motion } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 
+const translations = {
+  en: {
+    pageTitle: "Connect with Horizon Hospital",
+    pageSubtitle:
+      "Your health questions answered. Get in touch with our team in Tissamaharama today.",
+    contactHeading: "Get In Touch",
+    contactDescription:
+      "Have a question or need medical assistance? Our dedicated team is available around the clock to address your concerns. Reach out to us through any of the channels below, and we'll respond promptly.",
+    formHeading: "Send Us a Message",
+    nameLabel: "Your Name *",
+    namePlaceholder: "Enter your full name",
+    messageLabel: "Message *",
+    messagePlaceholder: "How can we help you?",
+    submitButton: "Send Message",
+    contactButton: "Get in Touch",
+    phoneTitle: "Phone",
+    phoneContent: "0472 239 444",
+    emailTitle: "Email",
+    emailContent: "info@horizonhospital.com",
+    addressTitle: "Address",
+    addressContent: "Horizon Hospital\nDebarawewa\nSri Lanka",
+    hoursTitle: "Hours",
+    hoursContent: "Open 24/7\nEmergency Services Always Available",
+  },
+  si: {
+    pageTitle: "හොරයිසන් රෝහල සමඟ සම්බන්ධ වන්න",
+    pageSubtitle:
+      "ඔබගේ සෞඛ්‍ය ප්‍රශ්නවලට පිළිතුරු. තිස්සමහාරමාවේ අපගේ කණ්ඩායම සමඟ අද සම්බන්ධ වන්න.",
+    contactHeading: "සම්බන්ධ වන්න",
+    contactDescription:
+      "ප්‍රශ්නයක් තිබේද හෝ වෛද්‍ය උපකාර අවශ්‍යද? අපගේ විශේෂිත කණ්ඩායම ඔබගේ ගැටළු ලක්ෂණාත්මකව විසඳා දීමට සූදානම්. පහත සඳහන් ක්‍රමයන්හි අපව සම්බන්ධ කරගන්න.",
+    formHeading: "පණිවුඩයක් එවන්න",
+    nameLabel: "ඔබේ නම *",
+    namePlaceholder: "ඔබේ සම්පූර්ණ නම ඇතුළත් කරන්න",
+    messageLabel: "පණිවුඩය *",
+    messagePlaceholder: "අපට ඔබට කෙසේ උදව් කළ හැකිද?",
+    submitButton: "පණිවුඩය යවන්න",
+    contactButton: "අපව සම්බන්ධ කරන්න",
+    phoneTitle: "දුරකථනය",
+    phoneContent: "0472 239 444",
+    emailTitle: "ඊමේල්",
+    emailContent: "info@horizonhospital.com",
+    addressTitle: "ලිපිනය",
+    addressContent: "හොරයිසන් රෝහල \n දෙබරවැව \n ශ්‍රී ලංකාව",
+    hoursTitle: "කාලය",
+    hoursContent: "24/7 විවෘතයි\nහදිසි සේවාවන් සෑම විටම ලබාගත හැක",
+  },
+};
+
 const Contact = () => {
   const { toast } = useToast();
+  const [lang, setLang] = useState("en");
+  const t = translations[lang];
+
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -21,36 +73,81 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+    const whatsappNumber = "+94 70 779 9444";
+    const cleaned = whatsappNumber.replace(/\D/g, "");
+    const text = `Name: ${formData.name || "-"}\nMessage: ${formData.message || "-"}`;
+    const url = `https://wa.me/${cleaned}?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
     toast({
-      title: "Message Sent!",
-      description: "We'll get back to you as soon as possible.",
+      title: t.submitButton,
+      description: "You'll be redirected to WhatsApp to send your message.",
     });
-    
     setFormData({ name: "", phone: "", message: "" });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
+  const contactItems = [
+    {
+      icon: <Phone className="h-6 w-6 text-primary" />,
+      title: t.phoneTitle,
+      content: (
+        <a
+          href="tel:+94472239444"
+          className="text-muted-foreground hover:text-primary transition-colors"
+        >
+          {t.phoneContent}
+        </a>
+      ),
+    },
+    {
+      icon: <Mail className="h-6 w-6 text-primary" />,
+      title: t.emailTitle,
+      content: (
+        <a
+          href="mailto:info@horizonhospital.com"
+          className="text-muted-foreground hover:text-primary transition-colors"
+        >
+          {t.emailContent}
+        </a>
+      ),
+    },
+    {
+      icon: <MapPin className="h-6 w-6 text-primary" />,
+      title: t.addressTitle,
+      content: (
+        <p className="whitespace-pre-line text-muted-foreground">
+          {t.addressContent}
+        </p>
+      ),
+    },
+    {
+      icon: <Clock className="h-6 w-6 text-primary" />,
+      title: t.hoursTitle,
+      content: (
+        <p className="whitespace-pre-line text-muted-foreground">
+          {t.hoursContent}
+        </p>
+      ),
+    },
+  ];
+
   return (
     <>
-      <SEO
-        title="Contact Horizon Hospital - 24/7 Emergency Support & Appointments"
-        description="Contact Horizon Hospital for appointments, emergency care, or inquiries. Available 24/7 for your healthcare needs. Call us or visit our location in Colombo, Sri Lanka."
-        keywords="Contact Horizon Hospital, 24/7 Support, Emergency Number, hospital contact, book appointment, medical emergency, Colombo hospital"
-      />
-      
+      <SEO title={t.pageTitle} description={t.pageSubtitle} />
       <PageTransition>
         <div className="min-h-screen bg-background">
           <Header />
-          
+
           <main>
-            <motion.section 
+            <motion.section
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
@@ -58,103 +155,58 @@ const Contact = () => {
             >
               <img
                 src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1920&h=400&fit=crop"
-                alt="Contact Horizon Hospital for medical services and appointments"
+                alt={t.pageTitle}
                 className="w-full h-full object-cover"
               />
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
                 className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 flex items-center"
               >
                 <div className="container mx-auto px-4">
-                  <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">Connect with Horizon Hospital</h1>
-                  <p className="text-xl text-white/90">Your health questions answered. Get in touch with our team in Tissamaharama today.</p>
+                  <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+                    {t.pageTitle}
+                  </h1>
+                  <p className="text-xl text-white/90">{t.pageSubtitle}</p>
                 </div>
               </motion.div>
             </motion.section>
 
+            {/* LANGUAGE SELECTOR */}
+            <div className="container mx-auto px-4 mt-4 flex justify-end items-center gap-5">
+              <p>{lang === "en" ? "Select Language :" : "භාෂාව තෝරන්න : "}</p>
+              <select
+                value={lang}
+                onChange={(e) => setLang(e.target.value)}
+                className="border px-3 py-2 rounded text-sm"
+              >
+                <option value="en">English</option>
+                <option value="si">සිංහල</option>
+              </select>
+            </div>
+
             <section className="py-16">
               <div className="container mx-auto px-4">
                 <div className="grid md:grid-cols-2 gap-12 mb-16">
+                  {/* Contact Info */}
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4 }}
                   >
-                    <h2 className="text-3xl font-bold mb-6 text-foreground">Get In Touch</h2>
+                    <h2 className="text-3xl font-bold mb-6 text-foreground">
+                      {t.contactHeading}
+                    </h2>
                     <p className="text-lg text-muted-foreground mb-8">
-                      Have a question or need medical assistance? Our dedicated team is available around the clock to address your concerns. 
-                      Reach out to us through any of the channels below, and we'll respond promptly.
+                      {t.contactDescription}
                     </p>
-
-                    <motion.div 
-                      className="space-y-6"
-                      initial="hidden"
-                      animate="visible"
-                      variants={{
-                        hidden: { opacity: 0 },
-                        visible: {
-                          opacity: 1,
-                          transition: {
-                            staggerChildren: 0.1
-                          }
-                        }
-                      }}
-                    >
-                      {[
-                        {
-                          icon: <Phone className="h-6 w-6 text-primary" />,
-                          title: "Phone",
-                          content: (
-                            <>
-                              <a href="tel:+94 472 239 444" className="text-muted-foreground hover:text-primary transition-colors">
-                                0472 239 444
-                              </a>
-                              <br />
-                              {/* <a href="tel:+94112345679" className="text-muted-foreground hover:text-primary transition-colors">
-                                +94 11 234 5679 (Emergency)
-                              </a> */}
-                            </>
-                          )
-                        },
-                        {
-                          icon: <Mail className="h-6 w-6 text-primary" />,
-                          title: "Email",
-                          content: (
-                            <a href="mailto:info@horizonhospital.com" className="text-muted-foreground hover:text-primary transition-colors">
-                              info@horizonhospital.com
-                            </a>
-                          )
-                        },
-                        {
-                          icon: <MapPin className="h-6 w-6 text-primary" />,
-                          title: "Address",
-                          content: (
-                            <p className="text-muted-foreground">
-                              Horizon Hospital<br />
-                              Debarawewa<br />
-                              Sri Lanka
-                            </p>
-                          )
-                        },
-                        {
-                          icon: <Clock className="h-6 w-6 text-primary" />,
-                          title: "Hours",
-                          content: (
-                            <p className="text-muted-foreground">
-                              Open 24/7<br />
-                              Emergency Services Always Available
-                            </p>
-                          )
-                        }
-                      ].map((item, index) => (
+                    <motion.div className="space-y-6">
+                      {contactItems.map((item, index) => (
                         <motion.div
                           key={index}
-                          variants={{
-                            hidden: { opacity: 0, y: 20 },
-                            visible: { opacity: 1, y: 0 }
-                          }}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
                         >
                           <Card>
                             <CardContent className="flex items-start gap-4 p-6">
@@ -162,7 +214,9 @@ const Contact = () => {
                                 {item.icon}
                               </div>
                               <div>
-                                <h3 className="font-semibold text-lg mb-2 text-foreground">{item.title}</h3>
+                                <h3 className="font-semibold text-lg mb-2 text-foreground">
+                                  {item.title}
+                                </h3>
                                 {item.content}
                               </div>
                             </CardContent>
@@ -172,6 +226,7 @@ const Contact = () => {
                     </motion.div>
                   </motion.div>
 
+                  {/* Contact Form */}
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -179,66 +234,36 @@ const Contact = () => {
                   >
                     <Card>
                       <CardContent className="p-8">
-                        <h2 className="text-3xl font-bold mb-6 text-foreground">Send Us a Message</h2>
+                        <h2 className="text-3xl font-bold mb-6 text-foreground">
+                          {t.formHeading}
+                        </h2>
                         <motion.form
                           onSubmit={handleSubmit}
                           className="space-y-6"
-                          initial="hidden"
-                          animate="visible"
-                          variants={{
-                            hidden: { opacity: 0 },
-                            visible: {
-                              opacity: 1,
-                              transition: {
-                                staggerChildren: 0.1
-                              }
-                            }
-                          }}
                         >
-                          {[
-                            {
-                              label: "Your Name *",
-                              id: "name",
-                              type: "text",
-                              placeholder: "Enter your full name"
-                            },
-                            {
-                              label: "Phone Number *",
-                              id: "phone",
-                              type: "tel",
-                              placeholder: "Enter your phone number"
-                            }
-                          ].map((field) => (
-                            <motion.div
-                              key={field.id}
-                              variants={{
-                                hidden: { opacity: 0, y: 20 },
-                                visible: { opacity: 1, y: 0 }
-                              }}
+                          <div>
+                            <label
+                              htmlFor="name"
+                              className="block text-sm font-medium mb-2 text-foreground"
                             >
-                              <label htmlFor={field.id} className="block text-sm font-medium mb-2 text-foreground">
-                                {field.label}
-                              </label>
-                              <Input
-                                id={field.id}
-                                name={field.id}
-                                type={field.type}
-                                required
-                                value={formData[field.id as keyof typeof formData]}
-                                onChange={handleChange}
-                                placeholder={field.placeholder}
-                              />
-                            </motion.div>
-                          ))}
-
-                          <motion.div
-                            variants={{
-                              hidden: { opacity: 0, y: 20 },
-                              visible: { opacity: 1, y: 0 }
-                            }}
-                          >
-                            <label htmlFor="message" className="block text-sm font-medium mb-2 text-foreground">
-                              Message *
+                              {t.nameLabel}
+                            </label>
+                            <Input
+                              id="name"
+                              name="name"
+                              type="text"
+                              required
+                              value={formData.name}
+                              onChange={handleChange}
+                              placeholder={t.namePlaceholder}
+                            />
+                          </div>
+                          <div>
+                            <label
+                              htmlFor="message"
+                              className="block text-sm font-medium mb-2 text-foreground"
+                            >
+                              {t.messageLabel}
                             </label>
                             <Textarea
                               id="message"
@@ -246,27 +271,20 @@ const Contact = () => {
                               required
                               value={formData.message}
                               onChange={handleChange}
-                              placeholder="How can we help you?"
+                              placeholder={t.messagePlaceholder}
                               rows={6}
                             />
-                          </motion.div>
-
-                          <motion.div
-                            variants={{
-                              hidden: { opacity: 0, y: 20 },
-                              visible: { opacity: 1, y: 0 }
-                            }}
-                          >
-                            <Button type="submit" className="w-full" size="lg">
-                              Send Message
-                            </Button>
-                          </motion.div>
+                          </div>
+                          <Button type="submit" className="w-full" size="lg">
+                            {t.submitButton}
+                          </Button>
                         </motion.form>
                       </CardContent>
                     </Card>
                   </motion.div>
                 </div>
 
+                {/* Google Map */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}

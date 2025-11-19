@@ -1,5 +1,22 @@
+// Full React Home Page with Language Selector and Translations
+// NOTE: Update paths for images/components according to your project structure.
+
 import { Link } from "react-router-dom";
-import { Users, Building2, Heart, Pill, Stethoscope, Home as HomeIcon, AlertCircle, PhoneCall, CheckCircle, CreditCard, UserCheck } from "lucide-react";
+import {
+  Users,
+  Building2,
+  Heart,
+  Pill,
+  Stethoscope,
+  Home as HomeIcon,
+  AlertCircle,
+  PhoneCall,
+  CheckCircle,
+  CreditCard,
+  UserCheck,
+  AlignCenter,
+} from "lucide-react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Header from "@/components/Header";
@@ -8,60 +25,122 @@ import HeroCarousel from "@/components/HeroCarousel";
 import SEO from "@/components/SEO";
 
 import opdD from "../../public/img/opdD.webp";
-import emergency from "../../public/img/emergency.webp"
+import emergency from "../../public/img/emergency.webp";
 import pharmacy from "../../public/img/pharammcy.webp";
 import consultant from "../../public/img/special.webp";
 
+// LANGUAGE TRANSLATION DATA
+const translations = {
+  en: {
+    doctors: "Doctors",
+    beds: "Medical Beds",
+    patients: "Happy Patients",
+    prescriptions: "Prescriptions",
 
+    hero_title: "Tissamaharama's Trusted Healthcare Partner",
+    hero_sub:
+      "Comprehensive Medical Services and Personalized Care for Your Family's Wellbeing.",
+    hero_etu: "Immediate Care: 24/7 Emergency & Trauma Unit (ETU)",
+
+    about_title: "About Horizon Hospital",
+    about_text:
+      "At Horizon Hospital in Tissamaharama, we are committed to providing exceptional, patient-centered healthcare. Our skilled team of medical professionals utilizes modern technology to deliver accurate diagnoses and effective treatments, from routine OPD consultations to advanced procedures like Endoscopy and Colonoscopy. We believe in creating a compassionate and healing environment where every patient receives personalized care and attention, ensuring the best possible health outcomes for our community. Your well-being is our singular focus.",
+
+    services_title: "Our Comprehensive Medical Services",
+    services_sub:
+      "Exceptional Healthcare Solutions in Tissamaharama for You and Your Family.",
+
+    why_title: "Why Choose Us",
+    why_sub: "Experience healthcare excellence with patient-centered services",
+
+    appointment_title: "Make Your Appointment Today",
+    appointment_sub:
+      "Get in touch with our team for personalized healthcare services",
+
+    view_services: "View All Services",
+    contact_us: "Contact Us Now",
+  },
+
+  si: {
+    doctors: "වෛද්‍යවරු",
+    beds: "සෙවණැලි ඇඳන්",
+    patients: "සතුටු රෝගීන්",
+    prescriptions: " ඖෂධ වට්ටෝරු",
+
+    hero_title: "තිස්සමහාරමාවේ විශ්වාසදායක හෙද අපේක්ෂාව",
+    hero_sub: "ඔබේ පවුලේ සෞඛ්‍යය සඳහා සම්පූර්ණ වෛද්‍ය සේවා.",
+    hero_etu: "ඉක්මන් සත්කාරය: 24/7 හදිසි & ආසාදන ඒකකය (ETU)",
+
+    about_title: "හොරයිසන් රෝහල ගැන",
+    about_text:
+      "තිස්සමහාරාමයේ හොරයිසන් රෝහලේ, අපි සුවිශේෂී, රෝගී කේන්ද්‍රීය සෞඛ්‍ය සේවාවක් සැපයීමට කැපවී සිටිමු. අපගේ දක්ෂ වෛද්‍ය වෘත්තිකයන් කණ්ඩායම, සාමාන්‍ය බාහිර රෝගී උපදේශනවල සිට එන්ඩොස්කොපි සහ කොලොනොස්කොපි වැනි උසස් ක්‍රියා පටිපාටි දක්වා නිවැරදි රෝග විනිශ්චය සහ ඵලදායී ප්‍රතිකාර ලබා දීම සඳහා නවීන තාක්ෂණය භාවිතා කරයි. සෑම රෝගියෙකුටම පුද්ගලාරෝපිත සත්කාර සහ අවධානය ලැබෙන, අපගේ ප්‍රජාව සඳහා හොඳම සෞඛ්‍ය ප්‍රතිඵල සහතික කරන, දයානුකම්පිත සහ සුවදායී පරිසරයක් නිර්මාණය කිරීම අපි විශ්වාස කරමු. ඔබේ යහපැවැත්ම අපගේ ඒකීය අවධානයයි.",
+
+    services_title: "අපගේ සම්පූර්ණ වෛද්‍ය සේවා",
+    services_sub: "ඔබ හා ඔබේ පවුල සඳහා වඩාත්ම විශ්වාසදායක සෞඛ්‍ය සේවා.",
+
+    why_title: "ඇයි අපව තෝරාගන්නේ",
+    why_sub: "රෝගී මධ්‍යගත සෞඛ්‍ය සේවාවන්",
+
+    appointment_title: "අවස්ථාවක් වෙන් කරවා ගන්න",
+    appointment_sub: "ඔබගේ සෞඛ්‍යය සඳහා අපගේ කණ්ඩායම්වලට අදම අමතන්න",
+
+    view_services: "සියලු සේවාවන් බලන්න",
+    contact_us: "අපව අදම අමතන්න",
+  },
+};
 
 const Home = () => {
-  const hospitalSchema = {
-    "@context": "https://schema.org",
-    "@type": "Hospital",
-    "name": "Horizon Hospital",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Debarawewa Thissamaharama",
-      "addressLocality": "Thissamaharama",
-      "addressRegion": "Southern Province",
-      "postalCode": "82600",
-      "addressCountry": "LK"
-    },
-    "telephone": "+94 472 239 444",
-    "openingHours": "Mo-Su 00:00-23:59",
-    "priceRange": "Rs Rs - Rs Rsrs",
-  };
+  const [lang, setLang] = React.useState("en");
+  const t = translations[lang];
 
   const stats = [
-    { icon: Users, label: "Doctors", value: "25+" },
-    { icon: Building2, label: "Medical Beds", value: "25+" },
-    { icon: Heart, label: "Happy Patients", value: "420+" },
-    { icon: Pill, label: "Prescriptions", value: "300K+" },
+    { icon: Users, label: t.doctors, value: "25+" },
+    { icon: Building2, label: t.beds, value: "25+" },
+    { icon: Heart, label: t.patients, value: "420+" },
+    { icon: Pill, label: t.prescriptions, value: "300K+" },
   ];
 
   const services = [
     {
       icon: Stethoscope,
-      title: "OPD Consultations",
-      description: "Comprehensive outpatient consultation with experienced physicians for all your routine and specialized healthcare needs.",
+      title: lang === "si" ? "OPD පිලිගැනීම්" : "OPD Consultations",
+      description:
+        lang === "si"
+          ? "දිනපතා OPD සේවාවන් ඔබ සඳහා."
+          : "Comprehensive outpatient consultations.",
       image: opdD,
     },
     {
       icon: Heart,
-      title: "Expert Specialist Consultations",
-      description: "Access leading medical specialists in various fields, offering expert diagnosis and personalized treatment plans.",
+      title:
+        lang === "si"
+          ? "විශේෂඥ වෛද්‍ය සේවාවන්"
+          : "Expert Specialist Consultations",
+      description:
+        lang === "si"
+          ? "විවිධ ක්ෂේත්‍රවල අත්දැකීම් සහිත විශේෂඥවරු."
+          : "Access leading medical specialists.",
       image: consultant,
     },
     {
       icon: AlertCircle,
-      title: "24/7 Emergency & Trauma Unit (ETU)",
-      description: "Rapid response and advanced life support for critical conditions. Always ready for immediate care in Tissamaharama.",
+      title:
+        lang === "si"
+          ? "24/7 හදිසි සේවා"
+          : "24/7 Emergency & Trauma Unit (ETU)",
+      description:
+        lang === "si"
+          ? "ඉක්මන් හා ව්‍යාපාරික හදිසි සත්කාරය."
+          : "Rapid response for critical conditions.",
       image: emergency,
     },
     {
       icon: Pill,
-      title: "Hospital Pharmacy",
-      description: "A fully stocked, qualified pharmacy ensuring you receive accurate and essential medications with professional guidance.",
+      title: lang === "si" ? "රෝහලේ ඖෂධාගාරය" : "Hospital Pharmacy",
+      description:
+        lang === "si"
+          ? "සම්පූර්ණ ඖෂධ හා වෘත්තීය උපදෙස්."
+          : "Fully stocked pharmacy with guidance.",
       image: pharmacy,
     },
   ];
@@ -69,23 +148,35 @@ const Home = () => {
   const features = [
     {
       icon: PhoneCall,
-      title: "24/7 Support Team",
-      description: "Round-the-clock assistance for all your medical queries and emergencies",
+      title: lang === "si" ? "24/7 සහාය" : "24/7 Support Team",
+      description:
+        lang === "si"
+          ? "රෝගී ප්‍රශ්න සඳහා සම්පූර්ණ සහාය."
+          : "Round-the-clock medical support.",
     },
     {
       icon: CheckCircle,
-      title: "SMS Appointment Alerts",
-      description: "Instant SMS notifications for appointment confirmations and reminders",
+      title: lang === "si" ? "SMS සූචනා" : "SMS Appointment Alerts",
+      description:
+        lang === "si"
+          ? "සුදුසුකම් සහිත SMS හෝඩියේ."
+          : "Instant appointment alerts.",
     },
     {
       icon: CreditCard,
-      title: "Easy Payment Options",
-      description: "Multiple payment methods including insurance, cards, and installment plans",
+      title: lang === "si" ? "පියවීමේ පහසු ක්‍රම" : "Easy Payment Options",
+      description:
+        lang === "si"
+          ? "බැංකු කාඩ්පත් සහ ආරක්ෂාව."
+          : "Multiple secure payment methods.",
     },
     {
       icon: UserCheck,
-      title: "Personalized Care",
-      description: "Tailored consultant matching based on your specific health requirements",
+      title: lang === "si" ? "පුද්ගලික සත්කාරය" : "Personalized Care",
+      description:
+        lang === "si"
+          ? "අදාල විශේෂඥ සේවාවන්."
+          : "Tailored consultant matching.",
     },
   ];
 
@@ -93,137 +184,115 @@ const Home = () => {
     <>
       <SEO
         title="Horizon Hospital - Quality Healthcare Services | 24/7 Medical Care"
-        description="Horizon Hospital provides comprehensive healthcare services with 25+ experienced doctors, modern facilities, and 24/7 emergency care in Sri Lanka."
-        keywords="hospital Sri Lanka, healthcare services, emergency care, medical consultation, doctors, pharmacy, OPD, home visit"
-        schema={hospitalSchema}
+        description="Horizon Hospital provides comprehensive healthcare services with experienced doctors and modern facilities."
+        keywords="hospital Sri Lanka"
       />
+
       <div className="min-h-screen bg-background">
         <Header />
+
         <main>
-          {/* Hero Section with Carousel */}
+          {/* HERO */}
           <HeroCarousel />
           <section className="py-20 bg-gradient-to-r from-primary/80 to-secondary/80 text-white text-center">
-            <div className="relative container mx-auto px-4">
-              {/* ECG Watermark Animation */}
-              <svg
-                className="absolute left-0 top-0 w-full h-24 md:h-32 opacity-30 pointer-events-none z-0"
-                viewBox="0 0 1440 100"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                style={{ animation: 'ecgMove 4s linear infinite' }}
-              >
-                <path
-                  d="M0 50 L200 50 L220 20 L240 80 L260 50 L400 50 L420 30 L440 70 L460 50 L600 50 L620 10 L640 90 L660 50 L800 50 L820 40 L840 60 L860 50 L1000 50 L1020 20 L1040 80 L1060 50 L1200 50 L1220 30 L1240 70 L1260 50 L1440 50"
-                  stroke="#fff"
-                  strokeWidth="3"
-                  strokeLinejoin="round"
-                  strokeDasharray="12 8"
-                >
-                </path>
-              </svg>
-              <style>{`
-                @keyframes ecgMove {
-                  0% { transform: translateX(0); }
-                  100% { transform: translateX(-60px); }
-                }
-              `}</style>
-              <div className="relative z-10">
-                <h1 className="text-5xl md:text-6xl font-bold mb-6">Tissamaharama's Trusted Healthcare Partner</h1>
-                <p className="text-2xl mb-4">Comprehensive Medical Services and Personalized Care for Your Family's Wellbeing.</p>
-                <div className="inline-block bg-white text-primary font-semibold px-6 py-3 rounded shadow-lg text-lg mt-4">
-                  Immediate Care: 24/7 Emergency & Trauma Unit (ETU)
-                </div>
-              </div>
+            <h1 className="text-5xl font-bold mb-6">{t.hero_title}</h1>
+            <p className="text-2xl mb-4">{t.hero_sub}</p>
+            <div className="inline-block bg-white text-primary font-semibold px-6 py-3 rounded shadow-lg text-lg mt-4">
+              {t.hero_etu}
             </div>
           </section>
 
-          {/* About Horizon Hospital Section */}
-          <section className="py-16 bg-card">
-            <div className="container mx-auto px-4">
-              <div className="max-w-3xl mx-auto text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">About Horizon Hospital</h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  At Horizon Hospital in Tissamaharama, we are committed to providing exceptional, patient-centered healthcare. Our skilled team of medical professionals utilizes modern technology to deliver accurate diagnoses and effective treatments, from routine OPD consultations to advanced procedures like Endoscopy and Colonoscopy. We believe in creating a compassionate and healing environment where every patient receives personalized care and attention, ensuring the best possible health outcomes for our community. Your wellbeing is our singular focus.
-                </p>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {stats.map((stat, index) => (
-                  <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                    <CardContent className="pt-6 pb-6">
-                      <stat.icon className="h-12 w-12 mx-auto mb-4 text-primary" />
-                      <p className="text-3xl font-bold text-primary mb-2">{stat.value}</p>
-                      <p className="text-muted-foreground">{stat.label}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+          {/* LANGUAGE SELECTOR */}
+          <div className="flex justify-end p-4 bg-gray-100 shadow-sm items-center column-gap-5">
+            <p>{lang === "en" ? "Select Language :" : "භාෂාව තෝරන්න : "}</p>
+            <select
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
+              className="px-3 py-1 rounded border"
+            >
+              <option value="en">English</option>
+              <option value="si">සිංහල</option>
+            </select>
+          </div>
+
+          {/* ABOUT */}
+          <section className="py-16 bg-card text-center">
+            <h2 className="text-4xl font-bold mb-6">{t.about_title}</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              {t.about_text}
+            </p>
+          </section>
+
+          {/* STATS */}
+          <section className="grid grid-cols-2 md:grid-cols-4 gap-6 container mx-auto py-16">
+            {stats.map((stat, i) => (
+              <Card key={i} className="text-center">
+                <CardContent className="pt-6 pb-6">
+                  <stat.icon className="h-12 w-12 mx-auto mb-4 text-primary" />
+                  <p className="text-3xl font-bold text-primary mb-2">
+                    {stat.value}
+                  </p>
+                  <p className="text-muted-foreground">{stat.label}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </section>
+
+          {/* SERVICES */}
+          <section className="py-16 text-center">
+            <h2 className="text-4xl font-bold mb-4">{t.services_title}</h2>
+            <p className="text-lg text-muted-foreground">{t.services_sub}</p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8 container mx-auto">
+              {services.map((s, i) => (
+                <Card key={i} className="overflow-hidden group">
+                  <img src={s.image} className="w-full h-48 object-cover" />
+                  <CardContent className="p-6">
+                    <s.icon className="h-10 w-10 text-primary mb-4" />
+                    <h3 className="text-xl font-semibold mb-3">{s.title}</h3>
+                    <p className="text-muted-foreground">{s.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <Button asChild size="lg" className="mt-8">
+              <Link to="/services">{t.view_services}</Link>
+            </Button>
+          </section>
+
+          {/* FEATURES */}
+          <section className="py-16 bg-accent text-center">
+            <h2 className="text-4xl font-bold mb-4">{t.why_title}</h2>
+            <p className="text-lg text-muted-foreground">{t.why_sub}</p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg-grid-cols-4 gap-6 container mx-auto mt-8">
+              {features.map((f, i) => (
+                <Card key={i} className="text-center">
+                  <CardContent className="pt-8 pb-8">
+                    <div className="inline-flex p-4 rounded-full bg-primary/10 mb-4">
+                      <f.icon className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-semibold mb-3">{f.title}</h3>
+                    <p className="text-muted-foreground text-sm">
+                      {f.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </section>
 
-          {/* Services Section */}
-          <section className="py-16">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Our Comprehensive Medical Services</h2>
-                <p className="text-lg text-muted-foreground">Exceptional Healthcare Solutions in Tissamaharama for You and Your Family.</p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                {services.map((service, index) => (
-                  <Card key={index} className="overflow-hidden hover:shadow-xl transition-shadow group">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                    <CardContent className="p-6">
-                      <service.icon className="h-10 w-10 text-primary mb-4" />
-                      <h3 className="text-xl font-semibold mb-3 text-foreground">{service.title}</h3>
-                      <p className="text-muted-foreground">{service.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-              <div className="text-center">
-                <Button asChild size="lg" className="font-semibold">
-                  <Link to="/services">View All Services</Link>
-                </Button>
-              </div>
-            </div>
-          </section>
-
-          {/* ...existing code... */}
-          <section className="py-16 bg-accent">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Why Choose Us</h2>
-                <p className="text-lg text-muted-foreground">Experience healthcare excellence with patient-centered services</p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {features.map((feature, index) => (
-                  <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                    <CardContent className="pt-8 pb-8">
-                      <div className="inline-flex p-4 rounded-full bg-primary/10 mb-4">
-                        <feature.icon className="h-8 w-8 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-semibold mb-3 text-foreground">{feature.title}</h3>
-                      <p className="text-muted-foreground text-sm">{feature.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </section>
-          <section className="py-16 bg-primary text-primary-foreground">
-            <div className="container mx-auto px-4 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Make Your Appointment Today</h2>
-              <p className="text-xl mb-8 opacity-90">Get in touch with our team for personalized healthcare services</p>
-              <Button asChild size="lg" variant="secondary" className="font-semibold">
-                <Link to="/contact">Contact Us Now</Link>
-              </Button>
-            </div>
+          {/* APPOINTMENT */}
+          <section className="py-16 bg-primary text-primary-foreground text-center">
+            <h2 className="text-4xl font-bold mb-4">{t.appointment_title}</h2>
+            <p className="text-xl mb-8 opacity-90">{t.appointment_sub}</p>
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/contact">{t.contact_us}</Link>
+            </Button>
           </section>
         </main>
+
         <Footer />
       </div>
     </>
