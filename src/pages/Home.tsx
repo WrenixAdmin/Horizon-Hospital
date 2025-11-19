@@ -38,7 +38,8 @@ const translations = {
     prescriptions: "Prescriptions",
 
     hero_title: "Tissamaharama's Trusted Healthcare Partner",
-    hero_sub: "Comprehensive Medical Services and Personalized Care for Your Family's Wellbeing.",
+    hero_sub:
+      "Comprehensive Medical Services and Personalized Care for Your Family's Wellbeing.",
     hero_etu: "Immediate Care: 24/7 Emergency & Trauma Unit (ETU)",
 
     about_title: "About Horizon Hospital",
@@ -46,13 +47,15 @@ const translations = {
       "At Horizon Hospital in Tissamaharama, we are committed to providing exceptional, patient-centered healthcare. Our skilled team of medical professionals utilizes modern technology to deliver accurate diagnoses and effective treatments, from routine OPD consultations to advanced procedures like Endoscopy and Colonoscopy. We believe in creating a compassionate and healing environment where every patient receives personalized care and attention, ensuring the best possible health outcomes for our community. Your well-being is our singular focus.",
 
     services_title: "Our Comprehensive Medical Services",
-    services_sub: "Exceptional Healthcare Solutions in Tissamaharama for You and Your Family.",
+    services_sub:
+      "Exceptional Healthcare Solutions in Tissamaharama for You and Your Family.",
 
     why_title: "Why Choose Us",
     why_sub: "Experience healthcare excellence with patient-centered services",
 
     appointment_title: "Make Your Appointment Today",
-    appointment_sub: "Get in touch with our team for personalized healthcare services",
+    appointment_sub:
+      "Get in touch with our team for personalized healthcare services",
 
     view_services: "View All Services",
     contact_us: "Contact Us Now",
@@ -109,7 +112,10 @@ const Home = () => {
     },
     {
       icon: Heart,
-      title: lang === "si" ? "විශේෂඥ වෛද්‍ය සේවාවන්" : "Expert Specialist Consultations",
+      title:
+        lang === "si"
+          ? "විශේෂඥ වෛද්‍ය සේවාවන්"
+          : "Expert Specialist Consultations",
       description:
         lang === "si"
           ? "විවිධ ක්ෂේත්‍රවල අත්දැකීම් සහිත විශේෂඥවරු."
@@ -118,16 +124,23 @@ const Home = () => {
     },
     {
       icon: AlertCircle,
-      title: lang === "si" ? "24/7 හදිසි සේවා" : "24/7 Emergency & Trauma Unit (ETU)",
+      title:
+        lang === "si"
+          ? "24/7 හදිසි සේවා"
+          : "24/7 Emergency & Trauma Unit (ETU)",
       description:
-        lang === "si" ? "ඉක්මන් හා ව්‍යාපාරික හදිසි සත්කාරය." : "Rapid response for critical conditions.",
+        lang === "si"
+          ? "ඉක්මන් හා ව්‍යාපාරික හදිසි සත්කාරය."
+          : "Rapid response for critical conditions.",
       image: emergency,
     },
     {
       icon: Pill,
       title: lang === "si" ? "රෝහලේ ඖෂධාගාරය" : "Hospital Pharmacy",
       description:
-        lang === "si" ? "සම්පූර්ණ ඖෂධ හා වෘත්තීය උපදෙස්." : "Fully stocked pharmacy with guidance.",
+        lang === "si"
+          ? "සම්පූර්ණ ඖෂධ හා වෘත්තීය උපදෙස්."
+          : "Fully stocked pharmacy with guidance.",
       image: pharmacy,
     },
   ];
@@ -137,25 +150,33 @@ const Home = () => {
       icon: PhoneCall,
       title: lang === "si" ? "24/7 සහාය" : "24/7 Support Team",
       description:
-        lang === "si" ? "රෝගී ප්‍රශ්න සඳහා සම්පූර්ණ සහාය." : "Round-the-clock medical support.",
+        lang === "si"
+          ? "රෝගී ප්‍රශ්න සඳහා සම්පූර්ණ සහාය."
+          : "Round-the-clock medical support.",
     },
     {
       icon: CheckCircle,
       title: lang === "si" ? "SMS සූචනා" : "SMS Appointment Alerts",
       description:
-        lang === "si" ? "සුදුසුකම් සහිත SMS හෝඩියේ." : "Instant appointment alerts.",
+        lang === "si"
+          ? "සුදුසුකම් සහිත SMS හෝඩියේ."
+          : "Instant appointment alerts.",
     },
     {
       icon: CreditCard,
       title: lang === "si" ? "පියවීමේ පහසු ක්‍රම" : "Easy Payment Options",
       description:
-        lang === "si" ? "බැංකු කාඩ්පත් සහ ආරක්ෂාව." : "Multiple secure payment methods.",
+        lang === "si"
+          ? "බැංකු කාඩ්පත් සහ ආරක්ෂාව."
+          : "Multiple secure payment methods.",
     },
     {
       icon: UserCheck,
       title: lang === "si" ? "පුද්ගලික සත්කාරය" : "Personalized Care",
       description:
-        lang === "si" ? "අදාල විශේෂඥ සේවාවන්." : "Tailored consultant matching.",
+        lang === "si"
+          ? "අදාල විශේෂඥ සේවාවන්."
+          : "Tailored consultant matching.",
     },
   ];
 
@@ -169,7 +190,7 @@ const Home = () => {
 
       <div className="min-h-screen bg-background">
         <Header />
-        
+
         <main>
           {/* HERO */}
           <HeroCarousel />
@@ -182,18 +203,17 @@ const Home = () => {
           </section>
 
           {/* LANGUAGE SELECTOR */}
-      <div className="flex justify-end p-4 bg-gray-100 shadow-sm items-center column-gap-5">
-        <p>{lang === "en" ? "Select Language :" : "භාෂාව : "}</p>
-        <select
-          value={lang}
-          onChange={(e) => setLang(e.target.value)}
-          className="px-3 py-1 rounded border"
-        >
-          
-          <option value="en">English</option>
-          <option value="si">සිංහල</option>
-        </select>
-      </div>
+          <div className="flex justify-end p-4 bg-gray-100 shadow-sm items-center column-gap-5">
+            <p>{lang === "en" ? "Select Language :" : "භාෂාව තෝරන්න : "}</p>
+            <select
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
+              className="px-3 py-1 rounded border"
+            >
+              <option value="en">English</option>
+              <option value="si">සිංහල</option>
+            </select>
+          </div>
 
           {/* ABOUT */}
           <section className="py-16 bg-card text-center">
@@ -209,7 +229,9 @@ const Home = () => {
               <Card key={i} className="text-center">
                 <CardContent className="pt-6 pb-6">
                   <stat.icon className="h-12 w-12 mx-auto mb-4 text-primary" />
-                  <p className="text-3xl font-bold text-primary mb-2">{stat.value}</p>
+                  <p className="text-3xl font-bold text-primary mb-2">
+                    {stat.value}
+                  </p>
                   <p className="text-muted-foreground">{stat.label}</p>
                 </CardContent>
               </Card>
@@ -252,7 +274,9 @@ const Home = () => {
                       <f.icon className="h-8 w-8 text-primary" />
                     </div>
                     <h3 className="text-lg font-semibold mb-3">{f.title}</h3>
-                    <p className="text-muted-foreground text-sm">{f.description}</p>
+                    <p className="text-muted-foreground text-sm">
+                      {f.description}
+                    </p>
                   </CardContent>
                 </Card>
               ))}

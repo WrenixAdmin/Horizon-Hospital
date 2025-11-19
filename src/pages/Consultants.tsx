@@ -305,9 +305,9 @@ const Consultants = () => {
           </section>
           <section className="py-16">
             <div className="container mx-auto px-4">
-              <div className="flex justify-end mb-6">
+              <div className="flex justify-end mb-6 items-center">
                 <label htmlFor="lang" className="mr-2 font-medium">
-                  {i18n.language === "si" ? "භාෂාව තෝරන්න" : "Select Language"}
+                  {i18n.language === "si" ? "භාෂාව තෝරන්න :" : "Select Language :"}
                 </label>
                 <select
                   id="lang"
