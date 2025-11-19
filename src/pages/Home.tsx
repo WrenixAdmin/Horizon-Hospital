@@ -195,7 +195,7 @@ const Home = () => {
           {/* HERO */}
           <HeroCarousel />
           <section className="py-20 bg-gradient-to-r from-primary/80 to-secondary/80 text-white text-center">
-            <h1 className="text-5xl font-bold mb-6">{t.hero_title}</h1>
+            <h1 className="text-4xl font-bold mb-6">{t.hero_title}</h1>
             <p className="text-2xl mb-4">{t.hero_sub}</p>
             <div className="inline-block bg-white text-primary font-semibold px-6 py-3 rounded shadow-lg text-lg mt-4">
               {t.hero_etu}
