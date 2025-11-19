@@ -21,16 +21,29 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    // Target WhatsApp number (will be cleaned of spaces/characters)
+    const whatsappNumber = "+94 70 779 9444";
+    const cleaned = whatsappNumber.replace(/\D/g, ""); // -> 94707799444
+
+    // Compose message with form values
+    const text = `Name: ${formData.name || "-"}\nMessage: ${formData.message || "-"}`;
+
+    // Open WhatsApp chat in new tab with prefilled text
+    const url = `https://wa.me/${cleaned}?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
+
+    // Optional UX feedback + reset form
     toast({
-      title: "Message Sent!",
-      description: "We'll get back to you as soon as possible.",
+      title: "Opening WhatsApp",
+      description: "You'll be redirected to WhatsApp to send your message.",
     });
-    
     setFormData({ name: "", phone: "", message: "" });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -44,13 +57,13 @@ const Contact = () => {
         description="Contact Horizon Hospital for appointments, emergency care, or inquiries. Available 24/7 for your healthcare needs. Call us or visit our location in Colombo, Sri Lanka."
         keywords="Contact Horizon Hospital, 24/7 Support, Emergency Number, hospital contact, book appointment, medical emergency, Colombo hospital"
       />
-      
+
       <PageTransition>
         <div className="min-h-screen bg-background">
           <Header />
-          
+
           <main>
-            <motion.section 
+            <motion.section
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
@@ -61,15 +74,20 @@ const Contact = () => {
                 alt="Contact Horizon Hospital for medical services and appointments"
                 className="w-full h-full object-cover"
               />
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
                 className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 flex items-center"
               >
                 <div className="container mx-auto px-4">
-                  <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">Connect with Horizon Hospital</h1>
-                  <p className="text-xl text-white/90">Your health questions answered. Get in touch with our team in Tissamaharama today.</p>
+                  <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+                    Connect with Horizon Hospital
+                  </h1>
+                  <p className="text-xl text-white/90">
+                    Your health questions answered. Get in touch with our team
+                    in Tissamaharama today.
+                  </p>
                 </div>
               </motion.div>
             </motion.section>
@@ -82,13 +100,17 @@ const Contact = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4 }}
                   >
-                    <h2 className="text-3xl font-bold mb-6 text-foreground">Get In Touch</h2>
+                    <h2 className="text-3xl font-bold mb-6 text-foreground">
+                      Get In Touch
+                    </h2>
                     <p className="text-lg text-muted-foreground mb-8">
-                      Have a question or need medical assistance? Our dedicated team is available around the clock to address your concerns. 
-                      Reach out to us through any of the channels below, and we'll respond promptly.
+                      Have a question or need medical assistance? Our dedicated
+                      team is available around the clock to address your
+                      concerns. Reach out to us through any of the channels
+                      below, and we'll respond promptly.
                     </p>
 
-                    <motion.div 
+                    <motion.div
                       className="space-y-6"
                       initial="hidden"
                       animate="visible"
@@ -97,9 +119,9 @@ const Contact = () => {
                         visible: {
                           opacity: 1,
                           transition: {
-                            staggerChildren: 0.1
-                          }
-                        }
+                            staggerChildren: 0.1,
+                          },
+                        },
                       }}
                     >
                       {[
@@ -108,7 +130,10 @@ const Contact = () => {
                           title: "Phone",
                           content: (
                             <>
-                              <a href="tel:+94 472 239 444" className="text-muted-foreground hover:text-primary transition-colors">
+                              <a
+                                href="tel:+94 472 239 444"
+                                className="text-muted-foreground hover:text-primary transition-colors"
+                              >
                                 0472 239 444
                               </a>
                               <br />
@@ -116,44 +141,50 @@ const Contact = () => {
                                 +94 11 234 5679 (Emergency)
                               </a> */}
                             </>
-                          )
+                          ),
                         },
                         {
                           icon: <Mail className="h-6 w-6 text-primary" />,
                           title: "Email",
                           content: (
-                            <a href="mailto:info@horizonhospital.com" className="text-muted-foreground hover:text-primary transition-colors">
+                            <a
+                              href="mailto:info@horizonhospital.com"
+                              className="text-muted-foreground hover:text-primary transition-colors"
+                            >
                               info@horizonhospital.com
                             </a>
-                          )
+                          ),
                         },
                         {
                           icon: <MapPin className="h-6 w-6 text-primary" />,
                           title: "Address",
                           content: (
                             <p className="text-muted-foreground">
-                              Horizon Hospital<br />
-                              Debarawewa<br />
+                              Horizon Hospital
+                              <br />
+                              Debarawewa
+                              <br />
                               Sri Lanka
                             </p>
-                          )
+                          ),
                         },
                         {
                           icon: <Clock className="h-6 w-6 text-primary" />,
                           title: "Hours",
                           content: (
                             <p className="text-muted-foreground">
-                              Open 24/7<br />
+                              Open 24/7
+                              <br />
                               Emergency Services Always Available
                             </p>
-                          )
-                        }
+                          ),
+                        },
                       ].map((item, index) => (
                         <motion.div
                           key={index}
                           variants={{
                             hidden: { opacity: 0, y: 20 },
-                            visible: { opacity: 1, y: 0 }
+                            visible: { opacity: 1, y: 0 },
                           }}
                         >
                           <Card>
@@ -162,7 +193,9 @@ const Contact = () => {
                                 {item.icon}
                               </div>
                               <div>
-                                <h3 className="font-semibold text-lg mb-2 text-foreground">{item.title}</h3>
+                                <h3 className="font-semibold text-lg mb-2 text-foreground">
+                                  {item.title}
+                                </h3>
                                 {item.content}
                               </div>
                             </CardContent>
@@ -179,7 +212,9 @@ const Contact = () => {
                   >
                     <Card>
                       <CardContent className="p-8">
-                        <h2 className="text-3xl font-bold mb-6 text-foreground">Send Us a Message</h2>
+                        <h2 className="text-3xl font-bold mb-6 text-foreground">
+                          Send Us a Message
+                        </h2>
                         <motion.form
                           onSubmit={handleSubmit}
                           className="space-y-6"
@@ -190,9 +225,9 @@ const Contact = () => {
                             visible: {
                               opacity: 1,
                               transition: {
-                                staggerChildren: 0.1
-                              }
-                            }
+                                staggerChildren: 0.1,
+                              },
+                            },
                           }}
                         >
                           {[
@@ -200,23 +235,20 @@ const Contact = () => {
                               label: "Your Name *",
                               id: "name",
                               type: "text",
-                              placeholder: "Enter your full name"
+                              placeholder: "Enter your full name",
                             },
-                            {
-                              label: "Phone Number *",
-                              id: "phone",
-                              type: "tel",
-                              placeholder: "Enter your phone number"
-                            }
                           ].map((field) => (
                             <motion.div
                               key={field.id}
                               variants={{
                                 hidden: { opacity: 0, y: 20 },
-                                visible: { opacity: 1, y: 0 }
+                                visible: { opacity: 1, y: 0 },
                               }}
                             >
-                              <label htmlFor={field.id} className="block text-sm font-medium mb-2 text-foreground">
+                              <label
+                                htmlFor={field.id}
+                                className="block text-sm font-medium mb-2 text-foreground"
+                              >
                                 {field.label}
                               </label>
                               <Input
@@ -224,7 +256,9 @@ const Contact = () => {
                                 name={field.id}
                                 type={field.type}
                                 required
-                                value={formData[field.id as keyof typeof formData]}
+                                value={
+                                  formData[field.id as keyof typeof formData]
+                                }
                                 onChange={handleChange}
                                 placeholder={field.placeholder}
                               />
@@ -234,10 +268,13 @@ const Contact = () => {
                           <motion.div
                             variants={{
                               hidden: { opacity: 0, y: 20 },
-                              visible: { opacity: 1, y: 0 }
+                              visible: { opacity: 1, y: 0 },
                             }}
                           >
-                            <label htmlFor="message" className="block text-sm font-medium mb-2 text-foreground">
+                            <label
+                              htmlFor="message"
+                              className="block text-sm font-medium mb-2 text-foreground"
+                            >
                               Message *
                             </label>
                             <Textarea
@@ -254,7 +291,7 @@ const Contact = () => {
                           <motion.div
                             variants={{
                               hidden: { opacity: 0, y: 20 },
-                              visible: { opacity: 1, y: 0 }
+                              visible: { opacity: 1, y: 0 },
                             }}
                           >
                             <Button type="submit" className="w-full" size="lg">
